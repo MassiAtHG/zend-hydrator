@@ -48,8 +48,8 @@ class FilterComposite implements FilterInterface
      */
     public function __construct(array $orFilters = [], array $andFilters = [])
     {
-        array_walk($orFilters, [$this, 'validateFilter']);
-        array_walk($andFilters, [$this, 'validateFilter']);
+        array_walk($orFilters,  \Closure::fromCallable([$this, 'validateFilter']));
+        array_walk($andFilters, \Closure::fromCallable([$this, 'validateFilter']));
 
         $this->orFilter = new ArrayObject($orFilters);
         $this->andFilter = new ArrayObject($andFilters);
